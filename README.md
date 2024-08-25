@@ -5,6 +5,6 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kikunayar/comic.naver-
 ```
 **USAGE EXAMPLE**
 ```
-python -c "from nava import downloader; downloader(0,100,816614,r'C:\Users\hunte\Desktop\man')"
+python -c "from nava import downloader; downloader(1,40,816614,r'C:\Users\hunte\Desktop\man')"
 ```
 start,end,comic_id,directory
