@@ -4,9 +4,9 @@ import aiohttp
 import httpx
 from bs4 import BeautifulSoup
 import re
+import os
 from pathlib import Path
 
-# Global lists to store image URLs and save paths
 dl, sp = [], []
 
 headers = {
@@ -14,25 +14,23 @@ headers = {
 }
 
 async def fetch_url(client, url):
-    try:
-        response = await client.get(url)
-        if response.status == 200:
-            return response.text
-    except Exception as e:
-        print(f"Error fetching URL {url}: {e}")
+    response = await client.get(url)
+    if response.status_code == 200:
+        return response.text
     return None
 
 async def fetch_download_image(client, url, fp):
     attempt = 0
-    retries = 999
+    retries = 999  # Reduced the number of retries for efficiency
     while attempt < retries:
         try:
             async with client.get(url, headers=headers) as response:
                 if response.status == 200:
                     image = await response.read()
-                    fp.write_bytes(image)
-                    print(f"DONE {fp}")
-                    return
+                    with open(fp, 'wb') as f:
+                        f.write(image)
+                        print(f"DONE {fp}")
+                        return
                 else:
                     print(f"Failed to fetch image from {url}: Status code {response.status}")
         except Exception as e:
@@ -43,11 +41,8 @@ async def fetch_download_image(client, url, fp):
 
 async def download():
     async with aiohttp.ClientSession() as client:
-        tasks = []
-        for url, fp in zip(dl, sp):
-            task = asyncio.create_task(fetch_download_image(client, url, fp))
-            tasks.append(task)
-        await asyncio.gather(*tasks, return_exceptions=True)
+        tasks = [fetch_download_image(client, url, fp) for url, fp in zip(dl, sp)]
+        await asyncio.gather(*tasks)
 
 async def set_path(start, end, comic_id, full_path):
     global dl
@@ -62,9 +57,10 @@ async def set_path(start, end, comic_id, full_path):
                     img_tags = div.find_all('img')
                     img_links = [img['src'] for img in img_tags if 'src' in img.attrs]
                     dl.extend(img_links)
-                    img_folder = full_path / str(cur)
-                    img_folder.mkdir(parents=True, exist_ok=True)
-                    save_paths = [img_folder / f'{e}.jpg' for e in range(len(img_links))]
+                    img_folder = os.path.join(full_path, str(cur))
+                    if not os.path.exists(img_folder):
+                        os.makedirs(img_folder)
+                    save_paths = [os.path.join(img_folder, f'{e}.jpg') for e in range(len(img_links))]
                     sp.extend(save_paths)
 
 def downloader(start, end, comic_id, outpath):
@@ -76,9 +72,9 @@ def downloader(start, end, comic_id, outpath):
         meta_tag = soup.find('meta', attrs={'property': 'og:title'})
         title_content = meta_tag.get('content')
         folder_name = re.sub(r'[<>:"/\\|?*]', '-', title_content)
-        full_path = outpath / folder_name
-        full_path.mkdir(parents=True, exist_ok=True)
+        full_path = os.path.join(outpath, folder_name)
+        if not os.path.exists(full_path):
+            os.makedirs(full_path)
         asyncio.run(set_path(start, end + 1, comic_id, full_path))
         asyncio.run(download())
-    else:
-        print(f"Failed to retrieve the comic list from {name_url}")
+        print("FINISHED")
