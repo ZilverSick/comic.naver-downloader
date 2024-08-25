@@ -6,8 +6,7 @@ import httpx
 from bs4 import BeautifulSoup
 import re
 import os
-dl=[]
-sp=[]
+dl,sp =[],[]
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -76,10 +75,3 @@ def downloader(start, end, comic_id, outpath):
             os.makedirs(full_path)
         asyncio.run(set_path(start, end + 1, comic_id, full_path))
         asyncio.run(download())
-if __name__ == '__main__':
-    start = 1  # min 1
-    end = 49
-    comic_id = 816614
-    outpath = r"C:\Users\hunte\Desktop\man"
-    downloader(start, end, comic_id, outpath)
-    
