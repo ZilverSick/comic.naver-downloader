@@ -6,8 +6,10 @@ from bs4 import BeautifulSoup
 import re
 import os
 from pathlib import Path
+import argparse
 
-dl, sp = [], []
+dl: list[str] = []
+sp: list[str] = []
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
@@ -44,7 +46,7 @@ async def download():
         tasks = [fetch_download_image(client, url, fp) for url, fp in zip(dl, sp)]
         await asyncio.gather(*tasks)
 
-async def set_path(start, end, comic_id, full_path):
+async def set_path(comic_id, start, end, full_path):
     global dl
     urls = [f"https://comic.naver.com/webtoon/detail?titleId={comic_id}&no={cur}" for cur in range(start, end)]
     async with httpx.AsyncClient() as client:
@@ -63,7 +65,7 @@ async def set_path(start, end, comic_id, full_path):
                     save_paths = [os.path.join(img_folder, f'{e}.jpg') for e in range(len(img_links))]
                     sp.extend(save_paths)
 
-def downloader(start, end, comic_id, outpath):
+def downloader(comic_id, start, end, outpath):
     outpath = Path(outpath)
     name_url = f"https://comic.naver.com/webtoon/list?titleId={comic_id}"
     response = requests.get(name_url)
@@ -75,6 +77,17 @@ def downloader(start, end, comic_id, outpath):
         full_path = os.path.join(outpath, folder_name)
         if not os.path.exists(full_path):
             os.makedirs(full_path)
-        asyncio.run(set_path(start, end + 1, comic_id, full_path))
+        asyncio.run(set_path(comic_id, start, end + 1, full_path))
         asyncio.run(download())
         print("FINISHED")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Download Naver Webtoons")
+    parser.add_argument("comic_id", type=int, help="Comic ID from Naver Webtoon")
+    parser.add_argument("start", type=int, help="Start episode number")
+    parser.add_argument("end", type=int, help="End episode number")
+    parser.add_argument("outpath", type=str, help="Output directory for download")
+
+    args = parser.parse_args()
+
+    downloader(args.comic_id, args.start, args.end, args.outpath)

@@ -1,14 +1,35 @@
 **INSTALLATION**
 
+```bash
+git clone https://github.com/ZilverSick/comic.naver-downloader.git
+pip install -r requirements.txt
 ```
+
+or
+
+```ps1
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kikunayar/comic.naver-downloader/main/nava.py" -OutFile nava.py
 ```
-**USAGE EXAMPLE** 
-```
-python -c "from nava import downloader; downloader(1,40,816614,r'C:\Users\hunte\Desktop\man')"
 
+**USAGE EXAMPLE** 
+
+Command line usage:
+
+```bash
+python nava.py 816614 1 40 .\webtoons
 ```
+
+or you can use it in a python script:
+
+```python
+from nava import downloader
+
+downloader(816614,1,40,r'.\webtoons')
+```
+
+- comic id = 816614
 - start = 1
 - end = 40
-- comic id = 816614
-- directory = r'C:\Users\hunte\Desktop\man'
+- directory = r'.\webtoons'
+
+Since the numbering is sequential, you might need to offset the episode count if there is a prologue
