@@ -11,6 +11,16 @@ for powershell window
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kikunayar/comic.naver-downloader/main/nava.py" -OutFile nava.py
 python nava.py 816614 1 40 .\webtoons
 ```
+
+for cmd window
+```
+curl -o nava.py https://raw.githubusercontent.com/kikunayar/comic.naver-downloader/main/nava.py
+python nava.py 816614 1 40 .\webtoons
+```ps1
+
+
+
+
 - comic id = 816614
 - start = 1
 - end = 40
