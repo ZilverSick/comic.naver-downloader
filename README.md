@@ -12,11 +12,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kikunayar/comic.naver-
 python nava.py 816614 1 40 .\webtoons
 ```
 
-for cmd window
-```cmd
-curl -o nava.py https://raw.githubusercontent.com/kikunayar/comic.naver-downloader/main/nava.py
-python nava.py 816614 1 40 .\webtoons
-```
+
 
 
 
@@ -25,6 +21,18 @@ python nava.py 816614 1 40 .\webtoons
 - start = 1
 - end = 40
 - directory = .\webtoons'
+
+
+
+
+
+for git 
+```ps1
+git clone https://github.com/ZilverSick/comic.naver-downloader.git
+cd comic.naver-downloader
+python nava.py 816614 1 40 .\webtoons
+```
+
 
 
 
