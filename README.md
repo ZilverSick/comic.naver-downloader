@@ -3,7 +3,6 @@
 ```bash
 git clone https://github.com/ZilverSick/comic.naver-downloader.git
 cd comic.naver-downloader
-pip install -r requirements.txt
 ```
 
 or
