@@ -5,6 +5,8 @@
 
 
 **INSTALLATION/USAGE**
+
+for powershell window
 ```ps1
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kikunayar/comic.naver-downloader/main/nava.py" -OutFile nava.py
 python nava.py 816614 1 40 .\webtoons
