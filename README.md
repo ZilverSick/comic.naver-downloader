@@ -26,7 +26,7 @@ python nava.py 816614 1 40 .\webtoons
 
 
 
-for git 
+for github
 ```ps1
 git clone https://github.com/ZilverSick/comic.naver-downloader.git
 cd comic.naver-downloader
