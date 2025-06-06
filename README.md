@@ -28,4 +28,4 @@ python nava.py 816614 1 40 .\webtoons
 
 
 
-Can someone please help continue writing this? I'm too lazy already.
+
