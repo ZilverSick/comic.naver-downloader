@@ -1,3 +1,9 @@
+
+**UPDATE 06/06/2025 **
++ Prevent duplicate image downloads
++ No need to install modules yourself, and no worries about your existing modules being overwritten or having to download different versions of existing modules
+
+
 **INSTALLATION**
 
 ```bash
