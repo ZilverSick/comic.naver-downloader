@@ -12,7 +12,7 @@ python nava.py 816614 1 40 .\webtoons
 - comic id = 816614
 - start = 1
 - end = 40
-- directory = r'.\webtoons'
+- directory = .\webtoons'
 
 
 
