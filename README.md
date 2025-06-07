@@ -6,12 +6,11 @@
 
 **INSTALLATION/USAGE**
 
-for powershell window
 ```ps1
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/kikunayar/comic.naver-downloader/main/nava.py" -OutFile nava.py
+git clone https://github.com/ZilverSick/comic.naver-downloader.git
+cd comic.naver-downloader
 python nava.py 816614 1 40 .\webtoons
 ```
-
 
 
 
@@ -26,12 +25,8 @@ python nava.py 816614 1 40 .\webtoons
 
 
 
-for github
-```ps1
-git clone https://github.com/ZilverSick/comic.naver-downloader.git
-cd comic.naver-downloader
-python nava.py 816614 1 40 .\webtoons
-```
+
+
 
 
 
